@@ -1,4 +1,4 @@
-import { Sandbox } from "@e2b/desktop";
+import { DesktopSandbox } from "@/lib/sandbox";
 import OpenAI from "openai";
 import { SSEEventType, SSEEvent, sleep } from "@/types/api";
 import {
@@ -191,12 +191,12 @@ function shouldApplyFallbackDelay(actions: OpenAIComputerAction[]): boolean {
 export class OpenAIComputerStreamer
   implements ComputerInteractionStreamerFacade {
   public instructions: string;
-  public desktop: Sandbox;
+  public desktop: DesktopSandbox;
   public resolution: [number, number];
 
   private openai: OpenAI;
 
-  constructor(desktop: Sandbox, resolution: [number, number]) {
+  constructor(desktop: DesktopSandbox, resolution: [number, number]) {
     this.desktop = desktop;
     this.resolution = resolution;
     this.openai = new OpenAI();

@@ -1,4 +1,4 @@
-import { Sandbox } from "@e2b/desktop";
+import { DesktopSandbox, getSandboxProvider } from "@/lib/sandbox";
 import { SSEEvent, SSEEventType } from "@/types/api";
 import {
   ComputerInteractionStreamerFacade,
@@ -24,31 +24,29 @@ export async function POST(request: Request) {
     resolution,
   } = await request.json();
 
-  const apiKey = process.env.E2B_API_KEY;
+  const provider = getSandboxProvider();
+  const configError = provider.getConfigError();
 
-  if (!apiKey) {
-    return new Response("E2B API key not found", { status: 500 });
+  if (configError) {
+    return new Response(configError, { status: 500 });
   }
 
-  let desktop: Sandbox | undefined;
+  let desktop: DesktopSandbox | undefined;
   let activeSandboxId = sandboxId;
   let vncUrl: string | undefined;
 
   try {
     if (!activeSandboxId) {
-      const newSandbox = await Sandbox.create({
+      const newSandbox = await provider.create({
         resolution,
-        dpi: 96,
         timeoutMs: SANDBOX_TIMEOUT_MS,
       });
 
-      await newSandbox.stream.start();
-
       activeSandboxId = newSandbox.sandboxId;
-      vncUrl = newSandbox.stream.getUrl();
+      vncUrl = newSandbox.getStreamUrl();
       desktop = newSandbox;
     } else {
-      desktop = await Sandbox.connect(activeSandboxId);
+      desktop = await provider.connect(activeSandboxId);
     }
 
     if (!desktop) {
