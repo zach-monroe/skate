@@ -9,7 +9,7 @@ import {
 import {
   ComputerInteractionStreamerFacade,
   ComputerInteractionStreamerFacadeStreamProps,
-} from "@/lib/streaming";
+} from "@/lib/streaming/types";
 import { ActionResponse } from "@/types/api";
 import { logDebug, logError, logWarning } from "../logger";
 import { OPENAI_MODEL } from "../config";

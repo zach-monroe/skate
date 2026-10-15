@@ -15,3 +15,11 @@ export const DEFAULT_RESOLUTION: [number, number] = [1024, 720];
 
 // Model identifier
 export const OPENAI_MODEL = "gpt-5.4";
+
+// Local OpenAI-compatible LLM (MODEL_PROVIDER=local). No defaults for the URL
+// or model: every server (Ollama, vLLM, ...) uses a different port/path.
+export const LOCAL_LLM_BASE_URL = process.env.LOCAL_LLM_BASE_URL;
+export const LOCAL_LLM_MODEL = process.env.LOCAL_LLM_MODEL;
+export const LOCAL_LLM_API_KEY = process.env.LOCAL_LLM_API_KEY || "not-needed";
+// Ask the server for response_format json_object; disable if it rejects it
+export const LOCAL_LLM_JSON_MODE = process.env.LOCAL_LLM_JSON_MODE !== "false";

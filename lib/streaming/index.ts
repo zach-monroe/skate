@@ -1,26 +1,32 @@
 import { DesktopSandbox } from "@/lib/sandbox";
-import { SSEEvent, ActionResponse } from "@/types/api";
+import { SSEEvent } from "@/types/api";
+import { ComputerInteractionStreamerFacade } from "./types";
+import { OpenAIComputerStreamer } from "./openai";
+import { LocalComputerStreamer } from "./local";
+
+export {
+  ComputerInteractionStreamerFacade,
+  type ComputerInteractionStreamerFacadeStreamProps,
+} from "./types";
+
+export function getComputerStreamer(
+  desktop: DesktopSandbox,
+  resolution: [number, number]
+): ComputerInteractionStreamerFacade {
+  const name = process.env.MODEL_PROVIDER || "openai";
+
+  switch (name) {
+    case "openai":
+      return new OpenAIComputerStreamer(desktop, resolution);
+    case "local":
+      return new LocalComputerStreamer(desktop, resolution);
+    default:
+      throw new Error(`Unknown MODEL_PROVIDER: ${name}`);
+  }
+}
 
 export function formatSSE(event: SSEEvent): string {
   return `data: ${JSON.stringify(event)}\n\n`;
-}
-
-export interface ComputerInteractionStreamerFacadeStreamProps {
-  signal: AbortSignal;
-  messages: { role: "user" | "assistant"; content: string }[];
-}
-
-export abstract class ComputerInteractionStreamerFacade {
-  abstract instructions: string;
-  abstract desktop: DesktopSandbox;
-  abstract resolution: [number, number];
-
-  abstract stream(
-    props: ComputerInteractionStreamerFacadeStreamProps
-  ): AsyncGenerator<SSEEvent>;
-
-  // action type is specific to the streamer implementation
-  abstract executeAction(action: unknown): Promise<ActionResponse | void>;
 }
 
 export function createStreamingResponse(
