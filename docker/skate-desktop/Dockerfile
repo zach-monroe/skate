@@ -18,16 +18,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # stream depends on `import -window root`, so relax that one restriction.
 RUN sed -i '/rights="none" pattern="X"/d' /etc/ImageMagick-6/policy.xml || true
 
-RUN useradd -m -s /bin/bash surf
+RUN useradd -m -s /bin/bash skate
 
 ENV DISPLAY=:1
-ENV HOME=/home/surf
+ENV HOME=/home/skate
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh && chown surf:surf /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh && chown skate:skate /usr/local/bin/entrypoint.sh
 
-USER surf
-WORKDIR /home/surf
+USER skate
+WORKDIR /home/skate
 
 EXPOSE 6080
 

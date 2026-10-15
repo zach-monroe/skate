@@ -9,7 +9,7 @@ interface ChatLoaderProps {
 }
 
 export function ChatLoader({
-  text = "surfing",
+  text = "skating",
   className,
   dotClassName,
   interval = 200,

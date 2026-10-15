@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Goal (in progress)
 
-I want to make this entire project work WITHOUT using external services. Meaning it will be configured to use local services only. (Users will bring their own self-hosted LLMs, etc.) I want to use basic containerization to provide the same core functionality of SURF without needing an API key or service with E2B
+I want to make this entire project work WITHOUT using external services. Meaning it will be configured to use local services only. (Users will bring their own self-hosted LLMs, etc.) I want to use basic containerization to provide the same core functionality of Skate without needing an API key or service with E2B
 
 Decisions so far:
 - E2B and OpenAI stay selectable alongside the new local options (not removed).
-- The Next.js app runs on the host (`npm run dev`/`start`). Only the desktop sandboxes run in Docker. Label sandbox containers `surf=1` and refuse to connect to or kill unlabeled ones (the app has no auth and takes `sandboxId` from the client). Bind noVNC ports to `127.0.0.1`.
+- The Next.js app runs on the host (`npm run dev`/`start`). Only the desktop sandboxes run in Docker. Label sandbox containers `skate=1` and refuse to connect to or kill unlabeled ones (the app has no auth and takes `sandboxId` from the client). Bind noVNC ports to `127.0.0.1`.
 - The target model is Gemma, served through a web UI's OpenAI-compatible endpoint. Don't rely on native tool calling: prefer a strict JSON action validated with `zod`, and reuse `ResolutionScaler` for screenshot downscaling.
 
 Plan:
@@ -45,7 +45,7 @@ Env vars (copy `.env.example` to `.env.local`): `E2B_API_KEY`, `OPENAI_API_KEY`,
 
 ## Architecture
 
-Surf is a Next.js 15 App Router app (React 19, Tailwind 4, `@/*` path alias to repo root) where an OpenAI computer-use agent drives a desktop sandbox (currently E2B Desktop, a Linux VM streamed to the browser over VNC) through the `DesktopSandbox` interface in `lib/sandbox/`.
+Skate is a Next.js 15 App Router app (React 19, Tailwind 4, `@/*` path alias to repo root) where an OpenAI computer-use agent drives a desktop sandbox (currently E2B Desktop, a Linux VM streamed to the browser over VNC) through the `DesktopSandbox` interface in `lib/sandbox/`.
 
 ### Request flow
 

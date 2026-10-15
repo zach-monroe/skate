@@ -8,7 +8,6 @@ import {
   Power,
   Menu,
   X,
-  ArrowUpRight,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
@@ -22,10 +21,9 @@ import Frame from "@/components/frame";
 import { Button } from "@/components/ui/button";
 import { Loader, AssemblyLoader } from "@/components/loader";
 import Link from "next/link";
-import Logo from "@/components/logo";
 import { RepoBanner } from "@/components/repo-banner";
 import { SANDBOX_TIMEOUT_MS } from "@/lib/config";
-import { Surfing } from "@/components/surfing";
+import { Skating } from "@/components/skating";
 
 export default function Home() {
   const [sandboxId, setSandboxId] = useState<string | null>(null);
@@ -212,15 +210,7 @@ export default function Home() {
               className="flex items-center gap-1 sm:gap-2"
               target="_blank"
             >
-              <Logo height={20} width={45} className="sm:h-6 sm:w-[54px]" />
-              <h1 className="whitespace-pre">Surf - Computer Agent by </h1>
-            </Link>
-            <Link
-              href="https://e2b.dev"
-              className="underline decoration-accent decoration-1 underline-offset-2 text-accent"
-              target="_blank"
-            >
-              E2B
+              <h1 className="whitespace-pre">Skate - Computer Agent</h1>
             </Link>
           </div>
 
@@ -390,18 +380,12 @@ export default function Home() {
               />
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                <Surfing className="text-[7px] leading-[7px] text-accent font-bold" />
+                <Skating className="text-[7px] leading-[7px] text-accent font-bold" />
                 <h1 className="text-center text-fg-300 max-w-xs">
                   <span className="text-fg">Type</span> a message or{" "}
                   <span className="text-fg">select</span> an example prompt to
                   start a new{" "}
-                  <a
-                    href="https://github.com/e2b-dev/desktop"
-                    className="underline inline-flex items-center gap-1 decoration-accent decoration-1 underline-offset-2 text-accent"
-                    target="_blank"
-                  >
-                    sandbox <ArrowUpRight className="size-4" />
-                  </a>
+                  sandbox
                 </h1>
               </div>
             )}
