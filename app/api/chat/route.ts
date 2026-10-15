@@ -3,9 +3,9 @@ import { SSEEvent, SSEEventType } from "@/types/api";
 import {
   ComputerInteractionStreamerFacade,
   createStreamingResponse,
+  getComputerStreamer,
 } from "@/lib/streaming";
 import { SANDBOX_TIMEOUT_MS } from "@/lib/config";
-import { OpenAIComputerStreamer } from "@/lib/streaming/openai";
 import { logError } from "@/lib/logger";
 
 export const maxDuration = 800;
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
     try {
       const streamer: ComputerInteractionStreamerFacade =
-        new OpenAIComputerStreamer(desktop, resolution);
+        getComputerStreamer(desktop, resolution);
 
       if (!sandboxId && activeSandboxId && vncUrl) {
         async function* stream(): AsyncGenerator<SSEEvent> {

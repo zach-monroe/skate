@@ -4,10 +4,10 @@ import { CreateSandboxOptions, DesktopSandbox, SandboxProvider } from "./types";
 
 const execFileAsync = promisify(execFile);
 
-const IMAGE_NAME = process.env.SURF_DOCKER_IMAGE || "surf-desktop:latest";
+const IMAGE_NAME = process.env.SKATE_DOCKER_IMAGE || "skate-desktop:latest";
 const CONTAINER_PORT = "6080";
 const MAX_BUFFER = 25 * 1024 * 1024;
-const SURF_LABEL = "surf=1";
+const SKATE_LABEL = "skate=1";
 
 async function docker(args: string[]): Promise<Buffer> {
   const { stdout } = await execFileAsync("docker", args, {
@@ -45,9 +45,9 @@ async function getVerifiedContainer(
   containerId: string
 ): Promise<DockerInspectResult> {
   const info = await inspect(containerId);
-  if (info.Config.Labels?.surf !== "1") {
+  if (info.Config.Labels?.skate !== "1") {
     throw new Error(
-      "Refusing to operate on a container without the surf=1 label"
+      "Refusing to operate on a container without the skate=1 label"
     );
   }
   return info;
@@ -102,7 +102,7 @@ class DockerDesktopSandbox implements DesktopSandbox {
   ) {}
 
   private exec(args: string[]): Promise<Buffer> {
-    return docker(["exec", "--user", "surf", this.sandboxId, ...args]);
+    return docker(["exec", "--user", "skate", this.sandboxId, ...args]);
   }
 
   async screenshot(): Promise<Uint8Array> {
@@ -221,7 +221,7 @@ export const dockerProvider: SandboxProvider = {
         stdio: "ignore",
       });
     } catch {
-      return `Docker image "${IMAGE_NAME}" not found locally. Build it: docker build -t ${IMAGE_NAME} docker/surf-desktop`;
+      return `Docker image "${IMAGE_NAME}" not found locally. Build it: docker build -t ${IMAGE_NAME} docker/skate-desktop`;
     }
 
     return undefined;
@@ -235,7 +235,7 @@ export const dockerProvider: SandboxProvider = {
       "-d",
       "--rm",
       "--label",
-      SURF_LABEL,
+      SKATE_LABEL,
       "--shm-size=1g",
       "-p",
       "127.0.0.1::6080",

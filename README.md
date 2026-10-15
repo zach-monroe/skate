@@ -1,11 +1,13 @@
-![E2B Surf Preview Light](/readme-assets/surf-light.png#gh-light-mode-only)
-![E2B Surf Preview Dark](/readme-assets/surf-dark.png#gh-dark-mode-only)
+![Skate Preview Light](/readme-assets/skate-light.png#gh-light-mode-only)
+![Skate Preview Dark](/readme-assets/skate-dark.png#gh-dark-mode-only)
 
-# 🏄 Surf - OpenAI's Computer Use Agent + E2B Desktop
+# 🛹 Skate - Computer Use Agent
 
 A Next.js application that allows AI to interact with a virtual desktop environment. This project integrates [E2B's desktop sandbox](https://github.com/e2b-dev/desktop) with OpenAI's API to create an AI agent that can perform tasks on a virtual computer through natural language instructions.
 
 [E2B](https://e2b.dev/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=surf) is an open source isolated virtual computer in the cloud made for AI use cases.
+
+> **Skate is a fork of [Surf](https://github.com/e2b-dev/surf) by [E2B](https://e2b.dev).** The original application, UI and agent design are E2B's work, released under the Apache License 2.0. This fork adds a local Docker desktop sandbox and support for self-hosted OpenAI-compatible models, and renames the project. It is not affiliated with or endorsed by E2B.
 
 ## Overview
 
@@ -52,8 +54,8 @@ Before starting, you'll need:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/e2b-dev/surf
-cd surf
+git clone git@github.com:zach-monroe/skate.git
+cd skate
 ```
 
 2. **Install dependencies**
@@ -83,9 +85,9 @@ Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
 Instead of E2B's cloud sandbox, you can run the desktop as a local Docker container — no E2B API key or external service required (OpenAI is still used for the agent itself).
 
-1. **Build the sandbox image** (one-time, or whenever `docker/surf-desktop/` changes):
+1. **Build the sandbox image** (one-time, or whenever `docker/skate-desktop/` changes):
 ```bash
-docker build -t surf-desktop:latest docker/surf-desktop
+docker build -t skate-desktop:latest docker/skate-desktop
 ```
 
 2. **Set the provider** in `.env.local`:
@@ -95,11 +97,11 @@ OPENAI_API_KEY=your_openai_api_key
 ```
 The host running `npm run dev`/`npm run start` needs access to the Docker daemon (e.g. be in the `docker` group on Linux, or have Docker Desktop running).
 
-3. **Start the app as usual** (`npm run dev`) — sandboxes are now created as local containers labeled `surf=1`, with noVNC bound to `127.0.0.1` only (not reachable from other machines).
+3. **Start the app as usual** (`npm run dev`) — sandboxes are now created as local containers labeled `skate=1`, with noVNC bound to `127.0.0.1` only (not reachable from other machines).
 
 **Caveats:**
-- Sandbox expiry timers live in the Next.js process's memory. Restarting the dev server forgets any pending expiries — clean up stragglers with `docker kill $(docker ps -q --filter label=surf=1)`.
-- The provider refuses to connect to or kill any container that isn't labeled `surf=1`, so it never touches unrelated containers on your machine.
+- Sandbox expiry timers live in the Next.js process's memory. Restarting the dev server forgets any pending expiries — clean up stragglers with `docker kill $(docker ps -q --filter label=skate=1)`.
+- The provider refuses to connect to or kill any container that isn't labeled `skate=1`, so it never touches unrelated containers on your machine.
 
 ## Usage
 
@@ -167,11 +169,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details. It is a modified version of [e2b-dev/surf](https://github.com/e2b-dev/surf), which is also Apache 2.0; the original license and copyright notices are retained.
 
 ## Support
 
 If you encounter any issues or have questions:
 - Check the [E2B Documentation](https://e2b.dev/docs?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=surf)
 - Join the [E2B Discord](https://discord.gg/U7KEcGErtQ)
-- Open an [issue](https://github.com/e2b-dev/computer-use-app/issues)
+- Open an [issue](https://github.com/zach-monroe/skate/issues)

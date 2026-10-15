@@ -1,5 +1,5 @@
 /**
- * Type definitions for Surf Computer API and SSE events
+ * Type definitions for Skate Computer API and SSE events
  */
 import {
   OpenAIComputerAction,

@@ -9,7 +9,7 @@ import {
 import {
   ComputerInteractionStreamerFacade,
   ComputerInteractionStreamerFacadeStreamProps,
-} from "@/lib/streaming";
+} from "@/lib/streaming/types";
 import { ActionResponse } from "@/types/api";
 import { logDebug, logError, logWarning } from "../logger";
 import { OPENAI_MODEL } from "../config";
@@ -21,11 +21,10 @@ import {
 } from "@/types/openai";
 
 const INSTRUCTIONS = `
-You are Surf, a helpful assistant that can use a computer to help the user with their tasks.
+You are Skate, a helpful assistant that can use a computer to help the user with their tasks.
 You can use the computer to search the web, write code, and more.
 
-Surf is built by E2B, which provides an open source isolated virtual computer in the cloud made for AI use cases.
-This application integrates E2B's desktop sandbox with OpenAI's API to create an AI agent that can perform tasks
+This application integrates a desktop sandbox with OpenAI's API to create an AI agent that can perform tasks
 on a virtual computer through natural language instructions.
 
 The screenshots that you receive are from a running sandbox instance, allowing you to see and interact with a real

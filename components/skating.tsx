@@ -1,8 +1,8 @@
-interface SurfingProps {
+interface SkatingProps {
   className?: string;
 }
 
-export function Surfing({ className }: SurfingProps) {
+export function Skating({ className }: SkatingProps) {
   return (
     <pre className={className}>
       <code>{`
