@@ -79,6 +79,28 @@ npm run dev
 
 Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Running locally with Docker (no E2B)
+
+Instead of E2B's cloud sandbox, you can run the desktop as a local Docker container — no E2B API key or external service required (OpenAI is still used for the agent itself).
+
+1. **Build the sandbox image** (one-time, or whenever `docker/surf-desktop/` changes):
+```bash
+docker build -t surf-desktop:latest docker/surf-desktop
+```
+
+2. **Set the provider** in `.env.local`:
+```env
+SANDBOX_PROVIDER=docker
+OPENAI_API_KEY=your_openai_api_key
+```
+The host running `npm run dev`/`npm run start` needs access to the Docker daemon (e.g. be in the `docker` group on Linux, or have Docker Desktop running).
+
+3. **Start the app as usual** (`npm run dev`) — sandboxes are now created as local containers labeled `surf=1`, with noVNC bound to `127.0.0.1` only (not reachable from other machines).
+
+**Caveats:**
+- Sandbox expiry timers live in the Next.js process's memory. Restarting the dev server forgets any pending expiries — clean up stragglers with `docker kill $(docker ps -q --filter label=surf=1)`.
+- The provider refuses to connect to or kill any container that isn't labeled `surf=1`, so it never touches unrelated containers on your machine.
+
 ## Usage
 
 1. **Start a Sandbox Instance**
