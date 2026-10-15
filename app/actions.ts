@@ -1,11 +1,11 @@
 "use server";
 
 import { SANDBOX_TIMEOUT_MS } from "@/lib/config";
-import { Sandbox } from "@e2b/desktop";
+import { getSandboxProvider } from "@/lib/sandbox";
 
 export async function increaseTimeout(sandboxId: string) {
   try {
-    const desktop = await Sandbox.connect(sandboxId);
+    const desktop = await getSandboxProvider().connect(sandboxId);
     await desktop.setTimeout(SANDBOX_TIMEOUT_MS); // 5 minutes
     return true;
   } catch (error) {
@@ -16,7 +16,7 @@ export async function increaseTimeout(sandboxId: string) {
 
 export async function stopSandboxAction(sandboxId: string) {
   try {
-    const desktop = await Sandbox.connect(sandboxId);
+    const desktop = await getSandboxProvider().connect(sandboxId);
     await desktop.kill();
     return true;
   } catch (error) {

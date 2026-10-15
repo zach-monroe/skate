@@ -1,4 +1,4 @@
-import { Sandbox } from "@e2b/desktop";
+import { DesktopSandbox } from "@/lib/sandbox";
 import { SSEEvent, ActionResponse } from "@/types/api";
 
 export function formatSSE(event: SSEEvent): string {
@@ -12,7 +12,7 @@ export interface ComputerInteractionStreamerFacadeStreamProps {
 
 export abstract class ComputerInteractionStreamerFacade {
   abstract instructions: string;
-  abstract desktop: Sandbox;
+  abstract desktop: DesktopSandbox;
   abstract resolution: [number, number];
 
   abstract stream(
