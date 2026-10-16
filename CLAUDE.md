@@ -41,7 +41,7 @@ Where the code is still coupled to E2B/OpenAI:
 
 There is no test runner configured. `lib/streaming/resolution.test.ts` is a standalone script (it `console.log`s results), not a Jest/Vitest suite.
 
-Env vars (copy `.env.example` to `.env.local`): `E2B_API_KEY`, `OPENAI_API_KEY`, optional `SANDBOX_PROVIDER` (defaults to `e2b`), optional `NEXT_PUBLIC_GTM_ID`, optional `LOG_LEVEL` (defaults to `debug`).
+Env vars (copy `.env.example` to `.env.local`): `E2B_API_KEY`, `OPENAI_API_KEY`, optional `SANDBOX_PROVIDER` (`e2b` default, `docker`, or `playwright`), optional `NEXT_PUBLIC_GTM_ID`, optional `LOG_LEVEL` (defaults to `debug`).
 
 ## Architecture
 

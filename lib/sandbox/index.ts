@@ -1,5 +1,6 @@
 import { dockerProvider } from "./docker";
 import { e2bProvider } from "./e2b";
+import { playwrightProvider } from "./playwright";
 import { SandboxProvider } from "./types";
 
 export type {
@@ -16,6 +17,8 @@ export function getSandboxProvider(): SandboxProvider {
       return e2bProvider;
     case "docker":
       return dockerProvider;
+    case "playwright":
+      return playwrightProvider;
     default:
       throw new Error(`Unknown SANDBOX_PROVIDER: ${name}`);
   }

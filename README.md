@@ -103,6 +103,25 @@ The host running `npm run dev`/`npm run start` needs access to the Docker daemon
 - Sandbox expiry timers live in the Next.js process's memory. Restarting the dev server forgets any pending expiries — clean up stragglers with `docker kill $(docker ps -q --filter label=skate=1)`.
 - The provider refuses to connect to or kill any container that isn't labeled `skate=1`, so it never touches unrelated containers on your machine.
 
+## Running locally with Playwright (no Docker, no E2B)
+
+If you don't want Docker either, set `SANDBOX_PROVIDER=playwright` to drive a Chromium browser on the host machine:
+
+1. **Install the browser** (one-time): `npx playwright install chromium`
+2. **Set the provider** in `.env.local`: `SANDBOX_PROVIDER=playwright`
+3. **Start the app as usual** (`npm run dev`). The live view is served by the app itself at `/api/playwright/<id>/view`.
+
+A visible browser window opens by default so you can watch the agent. Set `SKATE_PLAYWRIGHT_HEADLESS=true` to run without a window (for tests/CI); it also runs headless automatically on Linux when no display is available.
+
+Optionally set `SKATE_PLAYWRIGHT_START_URL` (default `https://duckduckgo.com`) to change the page each sandbox opens.
+
+**Differences from the Docker/E2B desktop:**
+- It is a browser only: no terminal, file manager, editor or other desktop apps.
+- The agent only sees the page, not the browser's address bar, so it can't type a URL; it navigates through the start page, search results and links.
+- The live view is read-only (you watch, you can't click in it).
+- Sandboxes run as isolated browser contexts inside one browser process, not in a container, so this offers less isolation than Docker. Only sandboxes the app created can be connected to or stopped.
+- Sandbox state is in the Next.js process's memory, so restarting the server ends all sandboxes.
+
 ## Usage
 
 1. **Start a Sandbox Instance**
